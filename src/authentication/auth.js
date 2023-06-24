@@ -4,6 +4,17 @@ const localStrategy = require('passport-local').Strategy
 
 const userModel = require('../models/user.model')
 
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+  
+passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+        done(err, user);
+    });
+});
+
 passport.use(
     'signup',
     new localStrategy(
@@ -14,7 +25,8 @@ passport.use(
     
         async function (email, password, done) {
             try {
-                const user = await userModel.create({email, password})
+                console.log("hello")
+                const user = await userModel.create({email, password});
                 return done(null, user)
             } catch(err) {
                 if (err instanceof mongoose.Error.ValidationError) {
@@ -32,7 +44,6 @@ passport.use(
         {
             "usernameField": "email",
             "passwordField": "password",
-            "passReqToCallback": true
         },
 
         async function(email, password, done) {

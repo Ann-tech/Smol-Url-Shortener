@@ -21,11 +21,11 @@ async function login(req, res, next) {
             req.login(user, {session: true}, async(err) => {
                 if (err) return next(err)
 
-                const user = {_id: user._id, email: user._email}
+                const body = {_id: user._id, email: user._email}
 
                 return res.status(200).json({
                     message: info.message,
-                    user
+                    user: body
                 })
             })
         } catch(err) {
