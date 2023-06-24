@@ -24,5 +24,35 @@ const userSchema = new Schema({
     }
 })
 
+userSchema.pre(
+    'save',
+    async function(next) {
+        let user = this
+
+        if (!user.isModified('password')) return next()
+
+        try {
+            const hash = await bcrypt.hash(user.password, 10)
+            user.password = hash
+            next()
+        } catch(err) {
+            next(err)
+        }  
+    }
+)
+
+userSchema.methods.isValidPassword = async function(password) {
+    const compare = await bcrypt.compare(password, this.password);
+    return compare;
+}
+
+//modifies data sent back to user
+userSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      delete returnedObject.__v
+      // the passwordHash should not be revealed
+      delete returnedObject.password
+    }
+});
 
 module.exports = model('User', userSchema)
