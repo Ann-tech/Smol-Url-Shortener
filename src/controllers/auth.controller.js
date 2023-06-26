@@ -23,7 +23,7 @@ async function login(req, res, next) {
 
                 const body = {_id: user._id, email: user._email}
 
-                res.render('index');
+                res.render('dashboard');
                 
                 // return res.status(200).json({
                 //     message: info.message,
