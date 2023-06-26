@@ -24,7 +24,8 @@ app.use(session({
 //Signup and login authentication middleware
 require('./authentication/auth')
 
-const authRoute = require('./routes/auth.route')
+const authRoute = require('./routes/auth.route');
+const linkRoute = reqire('./routes/link.route');
 
 //To parse url encoded data
 app.use(express.urlencoded( {extended: false} ))
@@ -32,8 +33,11 @@ app.use(express.urlencoded( {extended: false} ))
 //To parse data passed via body
 app.use(express.json())
 
-//USER ROUTE
+//AUTHENTICATION ROUTE
 app.use('/auth', authRoute)
+
+//LINKS ROUTE
+app.use('/links', linkRoute)
 
 if (process.env.NODE_ENV !== 'test') {
     db.connectToDb()
