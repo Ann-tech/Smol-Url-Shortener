@@ -1,4 +1,6 @@
-const urlSchema = Joi.string().uri({
+const joi = require('joi')
+
+const urlSchema = joi.string().uri({
     scheme: ['http', 'https'],
 });
 

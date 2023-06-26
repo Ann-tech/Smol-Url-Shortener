@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const session = require('express-session');
+const passport = require('passport')
+const path = require('path')
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -11,6 +14,13 @@ app.use( cors({
 }) );
 
 const db = require('./db');
+
+app.set('view-engine', 'ejs')
+app.set('views', path.join(__dirname, "views"))
+
+
+//Signup and login authentication middleware
+require('./authentication/auth')
 
 app.use(session({
     secret: process.env.SECRET_KEY,
@@ -21,11 +31,11 @@ app.use(session({
     },
 }));
 
-//Signup and login authentication middleware
-require('./authentication/auth')
+app.use(passport.initialize());
+app.use(passport.session());
 
 const authRoute = require('./routes/auth.route');
-const linkRoute = reqire('./routes/link.route');
+const linkRoute = require('./routes/link.route');
 
 //To parse url encoded data
 app.use(express.urlencoded( {extended: false} ))
