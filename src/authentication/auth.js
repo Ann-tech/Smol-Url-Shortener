@@ -25,7 +25,6 @@ passport.use(
     
         async function (email, password, done) {
             try {
-                console.log("hello")
                 const user = await userModel.create({email, password});
                 return done(null, user)
             } catch(err) {
