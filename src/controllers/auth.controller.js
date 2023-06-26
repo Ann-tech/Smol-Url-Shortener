@@ -22,11 +22,13 @@ async function login(req, res, next) {
                 if (err) return next(err)
 
                 const body = {_id: user._id, email: user._email}
+
+                res.render('index');
                 
-                return res.status(200).json({
-                    message: info.message,
-                    user: body
-                })
+                // return res.status(200).json({
+                //     message: info.message,
+                //     user: body
+                // })
             })
         } catch(err) {
             next(err)

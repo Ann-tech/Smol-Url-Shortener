@@ -13,6 +13,8 @@ app.use( cors({
     origin: `http://localhost:${PORT}`
 }) );
 
+app.use( express.static(path.join(__dirname, 'public')) )
+
 const db = require('./db');
 
 app.set('view-engine', 'ejs')
