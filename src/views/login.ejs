@@ -15,11 +15,15 @@
         </div>
         <div>
             <a href="">Sign Up</a>
-            <form action="http://localhost:3000/auth/login">
+            <form action="http://localhost:3000/auth/login" method="post">
                 <div>
                     <p>Login</p>
-                    <input type="email" name="" id="" placeholder="Email">
-                    <input type="password" name="" id="" placeholder="Password">
+                    
+                    <% if (errorMessage) { %>
+                      <p><%= errorMessage %> </p>
+                    <% } %>
+                    <input type="email" name="email" id="" placeholder="Email">
+                    <input type="password" name="password" id="" placeholder="Password">
                     <div>
                         <a href="">Don't have an account?</a>
                         <a href="">Forgot Password?</a>

@@ -17,7 +17,7 @@ app.use( express.static(path.join(__dirname, 'public')) )
 
 const db = require('./db');
 
-app.set('view-engine', 'ejs')
+app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, "views"))
 
 
@@ -38,6 +38,10 @@ app.use(passport.session());
 
 const authRoute = require('./routes/auth.route');
 const linkRoute = require('./routes/link.route');
+const loginRoute = require('./routes/login.route')
+const dashboardRoute = require('./routes/dashboard.route')
+
+const isLoggedIn = require('./middleware/auth.middleware');
 
 //To parse url encoded data
 app.use(express.urlencoded( {extended: false} ))
@@ -51,6 +55,12 @@ app.use('/auth', authRoute)
 //LINKS ROUTE
 app.use('/links', linkRoute)
 
+//LOGIN ROUTE
+app.use('/login', loginRoute)
+
+//DASHBOARD ROUTE
+app.use('/dashboard', isLoggedIn, dashboardRoute)
+
 if (process.env.NODE_ENV !== 'test') {
     db.connectToDb()
 }
@@ -60,6 +70,7 @@ if (process.env.NODE_ENV !== 'test') {
 //Error Middleware function
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
+    console.log(err);
     
     //send the first line of an error message 
     if (err instanceof Error) return res.json({error: err.message.split(os.EOL)[0]})

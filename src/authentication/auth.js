@@ -10,9 +10,13 @@ passport.serializeUser((user, done) => {
 });
   
 passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
-    });
+    userModel.findById(id)
+          .then((user) => {
+            done(null, user);
+          })
+          .catch((err) => {
+            done(err);
+          });
 });
 
 passport.use(
@@ -48,11 +52,12 @@ passport.use(
         async function(email, password, done) {
             try {
                 const user = await userModel.findOne({email})
-                if (!user) return done(null, false, {message: "User not found"})
+
+                if (!user) return done(null, false, {message: "User does not exist, kindly signup"})
 
                 const validate = await user.isValidPassword(password)
-                
-                if (!validate) return done(null, false, {message: "Password incorrect"})
+
+                if (!validate) return done(null, false, {message: "Incorrect password"})
 
                 return done(null, user, {message: "Login successful"})
             } catch(err) {
