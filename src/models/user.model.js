@@ -21,7 +21,11 @@ const userSchema = new Schema({
     updated_at: {
         type: Date,
         default: Date
-    }
+    },
+    links: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Link'
+    }]
 })
 
 userSchema.pre(
