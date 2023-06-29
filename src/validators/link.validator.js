@@ -1,8 +1,11 @@
 const joi = require('joi')
 
-const urlSchema = joi.string().uri({
-    scheme: ['http', 'https'],
-});
+const urlSchema = joi.object({
+    url: joi.string()
+            .uri({
+                scheme: ['http', 'https'],
+            })
+})
 
 const linkValidationMiddleware = async function(req, res, next) {
     try {
