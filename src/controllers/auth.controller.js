@@ -1,12 +1,12 @@
 const passport = require('passport')
 
-function signup(req, res) {
-    return res.status(201).json({
-        status: true, 
-        message: "Signup successful",
-        user: req.user
-    })
-}
+// function signup(req, res) {
+//     return res.status(201).json({
+//         status: true, 
+//         message: "Signup successful"
+//     })
+//     return res.redirect('/dashboard')
+// }
 
 async function login(req, res, next) {
     passport.authenticate('login', async (err, user, info) => {
@@ -42,6 +42,5 @@ async function login(req, res, next) {
 }
 
 module.exports = {
-    signup,
     login
 }

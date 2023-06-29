@@ -24,18 +24,25 @@ passport.use(
     new localStrategy(
         {
             usernameField: 'email',
-            passwordField: 'password'
+            passwordField: 'password',
+            passReqToCallback: true
         },
     
-        async function (email, password, done) {
+        async function (req, email, password, done) {
             try {
                 const user = await userModel.create({email, password});
+                console.log(user);
                 return done(null, user)
             } catch(err) {
                 if (err instanceof mongoose.Error.ValidationError) {
-                    err.status = 400
+                    err.status = 400;
+                    req.session.errorMessage = "An error has occured while processing request, please try again"
+                } else {
+                    req.session.errorMessage = "User already exists";
                 }
-                done(err)
+                done(null, false)
+                // done(null, false);
+
             }
         }
     )

@@ -37,8 +37,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const authRoute = require('./routes/auth.route');
-const linkRoute = require('./routes/link.route');
+const signupRoute = require('./routes/signup.route')
 const loginRoute = require('./routes/login.route')
+const linkRoute = require('./routes/link.route');
 const dashboardRoute = require('./routes/dashboard.route')
 
 const isLoggedIn = require('./middleware/auth.middleware');
@@ -52,11 +53,15 @@ app.use(express.json())
 //AUTHENTICATION ROUTE
 app.use('/auth', authRoute)
 
-//LINKS ROUTE
-app.use('/links', linkRoute)
+//SIGNUP ROUTE
+app.use('/signup', signupRoute)
 
 //LOGIN ROUTE
 app.use('/login', loginRoute)
+
+//LINKS ROUTE
+app.use('/links', linkRoute)
+
 
 //DASHBOARD ROUTE
 app.use('/dashboard', isLoggedIn, dashboardRoute)
@@ -70,7 +75,7 @@ if (process.env.NODE_ENV !== 'test') {
 //Error Middleware function
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    console.log(err);
+    console.log("hello error");
     
     //send the first line of an error message 
     if (err instanceof Error) return res.json({error: err.message.split(os.EOL)[0]})
