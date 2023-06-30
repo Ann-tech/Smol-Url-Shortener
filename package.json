@@ -30,6 +30,7 @@
     "express-session": "^1.17.3",
     "joi": "^17.9.2",
     "mongoose": "^7.3.1",
+    "nanoid": "^3.3.6",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
   },

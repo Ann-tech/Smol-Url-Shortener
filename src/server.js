@@ -75,7 +75,6 @@ if (process.env.NODE_ENV !== 'test') {
 //Error Middleware function
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    console.log("hello error");
     
     //send the first line of an error message 
     if (err instanceof Error) return res.json({error: err.message.split(os.EOL)[0]})

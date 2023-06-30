@@ -3,6 +3,7 @@ const axios = require('axios');
 const checkUrlAvailability = async (url) => {
     try {
       const response = await axios.head(url);
+      
       if (response.status >= 400) {
         throw new Error(`URL unavailable: ${response.status}`);
       }

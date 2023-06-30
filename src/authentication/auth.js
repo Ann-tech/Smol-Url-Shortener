@@ -31,7 +31,6 @@ passport.use(
         async function (req, email, password, done) {
             try {
                 const user = await userModel.create({email, password});
-                console.log(user);
                 return done(null, user)
             } catch(err) {
                 if (err instanceof mongoose.Error.ValidationError) {
